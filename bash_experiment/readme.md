@@ -8,6 +8,7 @@ Eksperimendis on kolm alamkataloogi
 - 'results' -> sisaldab kokkuvõtet
 
 fail generate_data.py genereerib 200 juhuslikku täisarvu vahemikus 1-100
+
 fail generate_data.sh käivitab eelmise faili skripti 10 korda ning salvestab iga tulemuse eraldi faili
 
 # Kasutatud käsud
