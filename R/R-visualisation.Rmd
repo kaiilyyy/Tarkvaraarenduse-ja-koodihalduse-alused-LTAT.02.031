@@ -93,7 +93,7 @@ Andmestiku kirjeldus
 Lihtsaim viis andmete lugemiseks on kasutada `read_csv` käsku:
 
 ```{r}
-Isd <- read_csv('../../data/Islander_data.csv')
+Isd <- read_csv('Islander_data.csv')
 
 Isd
 ```
@@ -180,7 +180,14 @@ erinevate ravimite ja nende dooside mõju mälu taastamisele.
 
 ```{r}
 # Loo vanuserühma veerg
-
+fail <- Isd
+fail <- fail %>%
+  mutate(age_group = case_when(
+    age < 30 ~ "Noor",
+    age <= 50 ~ "Keskealine",
+    age > 51 ~ "Seenior"
+  ))
+head(fail)
 
 ```
 
@@ -445,8 +452,10 @@ heledaks (läbipaistvaks), kasuta positsiooni `jitter`. Rohkem võimalusi leiad
 spikrilt.
 
 ```{r fig.width=8, fig.height=6}
+ggplot(fail, aes(x = Drug, y = Diff)) + geom_violin(aes(fill=Drug), alpha = 0.5) + 
+  geom_point(position = position_jitter(width=0.2), alpha = 0.15) + theme_minimal()
 
-
+#Viiuli kuju näitab kuidas Diff väärtused on jaotunud. Viiul on laiem seal, kus on rohkem vaatlusi. Näha on ka jaotuse kuju.
 
 ```
 
@@ -800,7 +809,20 @@ Uuri rohkem võimalusi erinevatelt
 [spikritelt](https://posit.co/resources/cheatsheets/).
 
 ```{r}
-
+table(fail$Drug)
+fail %>% 
+  mutate(Drug_name = case_when( 
+    Drug == "A" ~ "A",
+    Drug == "T" ~ "T",
+    Drug == "S" ~ "S",
+    TRUE        ~ Drug
+  )) %>%
+  ggplot(aes(x = Drug_name, y = Diff, fill=Drug_name)) +
+  geom_boxplot(alpha=0.5, outlier.shape=NA) +
+  geom_jitter(width=0.2, alpha=0.3) +
+  geom_hline(yintercept = 0, linetype = "dashed", color="grey") + 
+  labs(title = "Ravimi mõju mälu skoorile", x = "Ravim", y = "Mälu skoori muutus (Diff)") + 
+  theme_minimal() + theme(legend.position = "none")
 
 
 ```
