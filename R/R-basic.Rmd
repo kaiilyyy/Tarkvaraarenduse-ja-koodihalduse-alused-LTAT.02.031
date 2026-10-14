@@ -140,6 +140,7 @@ print(v)
 # print(mixed_v)
 ```
 
+
 2.  **matrix**: Kahemõõtmeline elementide massiiv, mis on organiseeritud
     ridadeks ja veergudeks ning kõik elemendid on sama tüüpi. Maatrikseid
     kasutatakse lineaaralgebra teheteks ja tabelandmete salvestamiseks
